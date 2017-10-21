@@ -79,7 +79,7 @@ function start (entry, opts) {
     }
     state.files[nodeName] = data
 
-    if (name === 'scripts:bundle') emitter.emit('scripts:bundle', node)
+    if (name === 'documents:index.html') emitter.emit('documents:index.html', node)
     if (name === 'style:bundle') emitter.emit('style:bundle', node)
 
     // Only calculate the gzip size if there's a buffer. Apparently zipping
@@ -176,7 +176,7 @@ function start (entry, opts) {
 
   router.route(/\/reload/, function sse (req, res) {
     var connected = true
-    emitter.on('scripts:bundle', reloadScript)
+    emitter.on('documents:index.html', reloadScript)
     emitter.on('style:bundle', reloadStyle)
     state.sse += 1
     if (!quiet) render()
@@ -203,7 +203,7 @@ function start (entry, opts) {
     function disconnect () {
       clearInterval(interval)
       if (connected) {
-        emitter.removeListener('scripts:bundle', reloadScript)
+        emitter.removeListener('documents:index.html', reloadScript)
         emitter.removeListener('style:bundle', reloadStyle)
         connected = false
         state.sse -= 1
